@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("cors");
+const cors = require('cors');
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
@@ -43,6 +43,11 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+  credentials: true
+}));
 
 
 module.exports = app;
