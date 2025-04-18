@@ -9,8 +9,12 @@ exports.register = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.create({ email, password });
   const token = createToken(user._id);
-  res.cookie('token', token, { httpOnly: true, secure: true });
-  res.status(201).json({ message: 'Usuario creado', userId: user._id });
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Strict'
+  });
+  res.status(201).json({ message: 'Usuario registrado' });
 };
 
 exports.login = async (req, res) => {
@@ -20,6 +24,10 @@ exports.login = async (req, res) => {
     return res.status(401).json({ error: 'Credenciales inválidas' });
   }
   const token = createToken(user._id);
-  res.cookie('token', token, { httpOnly: true, secure: true });
-  res.status(200).json({ message: 'Inicio de sesión exitoso' });
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Strict'
+  });
+  res.json({ message: 'Login exitoso' });
 };

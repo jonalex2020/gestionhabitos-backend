@@ -5,6 +5,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const createError = require("http-errors");
 
+const cors = require('cors');
+require('dotenv').config();
+
 require("./config/database.js");
 
 var indexRouter = require("./routes/index");
@@ -45,8 +48,10 @@ app.use(function (err, req, res, next) {
 });
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
-  credentials: true
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 
